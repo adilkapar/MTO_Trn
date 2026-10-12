@@ -1,0 +1,27 @@
+managed with unmanaged save implementation in class ZBP_R_MTO_EXCESS_STOCK unique;
+//strict ( 2 );
+
+/// RAP Behavior for MTO Excess Stock Transfer.
+/// Implementation type: managed with unmanaged save.
+///   - No CRUD operations — the entity is read-only.
+///   - One instance action 'transferStock' fills a class-level buffer.
+///   - One static action 'transferByPallet' transfers all stock for a given pallet.
+///   - save_modified in lsc_excessstock calls BAPI_GOODSMVT_CREATE (Clean Core).
+///   - RAP framework manages commit/rollback — no BAPI_TRANSACTION_COMMIT.
+
+define behavior for ZR_MTO_ExcessStock alias ExcessStock
+  lock master
+  with unmanaged save
+  authorization master ( instance )
+{
+  // The action accepts a popup-filled parameter (ZMTO_A_TransferParams).
+  // No result — this is a destructive action (source stock rows disappear after transfer).
+  // Multi-select is supported: Fiori Elements allows multi-selection on instance actions.
+  action transferStock
+    parameter ZMTO_A_TransferParams;
+
+  // Static action — no row selection needed.
+  // Transfers ALL stock lines matching the given pallet number and plant.
+  static action transferByPallet
+    parameter ZMTO_A_PalletTransferParams;
+}

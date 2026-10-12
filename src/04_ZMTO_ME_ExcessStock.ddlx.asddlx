@@ -1,0 +1,239 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName:       'Excess Stock',
+  typeNamePlural: 'Excess Stock Lines',
+  title:          { type: #STANDARD, value: 'Material' },
+  description:    { type: #STANDARD, value: 'MaterialDescription' }
+}
+@UI.presentationVariant: [{
+  sortOrder:      [{ by: 'Material', direction: #ASC },
+                   { by: 'Plant',    direction: #ASC }],
+  visualizations: [{ type: #AS_LINEITEM }]
+}]
+
+annotate view ZC_MTO_ExcessStock with
+{
+  /* =========================================================== */
+  /* Material — filter + table column + action button            */
+  /* =========================================================== */
+  @UI.selectionField: [{ position: 10 }]
+  @UI.lineItem: [
+    { position: 10, label: 'Material' },
+    { type: #FOR_ACTION, dataAction: 'transferStock', label: 'Transfer Stock',
+      position: 10, emphasized: true },
+    { type: #FOR_ACTION, dataAction: 'transferByPallet', label: 'Transfer by Pallet',
+      position: 20, emphasized: true }
+  ]
+  @UI.identification: [{ position: 10, label: 'Material' }]
+  Material;
+
+  @UI.selectionField: [{ position: 20 }]
+  @UI.lineItem:       [{ position: 30, label: 'Plant' }]
+  @UI.identification: [{ position: 20, label: 'Plant' }]
+  Plant;
+
+  @UI.selectionField: [{ position: 30 }]
+  @UI.lineItem:       [{ position: 40, label: 'Storage Location' }]
+  @UI.identification: [{ position: 30, label: 'Storage Location' }]
+  StorageLocation;
+
+  @UI.selectionField: [{ position: 40 }]
+  @UI.lineItem:       [{ position: 60, label: 'Source Sales Order' }]
+  @UI.identification: [{ position: 40, label: 'Source Sales Order' }]
+  SalesOrder;
+
+  @UI.selectionField: [{ position: 50 }]
+  @UI.lineItem:       [{ position: 55, label: 'Customer' }]
+  @UI.identification: [{ position: 50, label: 'Customer' }]
+  Customer;
+
+  @UI.lineItem:       [{ position: 56, label: 'Customer Name' }]
+  @UI.identification: [{ position: 55, label: 'Customer Name' }]
+  CustomerName;
+
+  @UI.lineItem:       [{ position: 20,  label: 'Description' }]
+  @UI.identification: [{ position: 60,  label: 'Description' }]
+  MaterialDescription;
+
+  @UI.lineItem:       [{ position: 50,  label: 'Batch' }]
+  @UI.identification: [{ position: 70,  label: 'Batch' }]
+  Batch;
+
+  @UI.selectionField: [{ position: 60 } ]
+  @UI.lineItem:       [{ position: 51,  label: 'Pallet Number' }]
+  @UI.identification: [{ position: 71,  label: 'Pallet Number' }]
+  pallet;
+
+  @UI.lineItem:       [{ position: 70,  label: 'Source SO Item' }]
+  @UI.identification: [{ position: 80,  label: 'Source SO Item' }]
+  SalesOrderItem;
+
+  @UI.lineItem:       [{ position: 80,  label: 'Available Qty' }]
+  @UI.identification: [{ position: 90,  label: 'Available Qty' }]
+  StockQuantity;
+
+  @UI.lineItem:       [{ position: 90,  label: 'UoM' }]
+  @UI.identification: [{ position: 95,  label: 'UoM' }]
+  BaseUnit;
+
+  /* --- General / Common characteristics --- */
+  @UI.lineItem:   [{ position: 100, label: 'Width',           importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 10, label: 'Width' }]
+  Width;
+
+  @UI.lineItem:   [{ position: 110, label: 'Process',         importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 20, label: 'Process' }]
+  Process;
+
+  @UI.lineItem:   [{ position: 120, label: 'Micron',          importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 30, label: 'Micron' }]
+  Micron;
+
+  @UI.lineItem:   [{ position: 130, label: 'Box Type',        importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 40, label: 'Box Type' }]
+  BoxType;
+
+  @UI.lineItem:   [{ position: 140, label: 'Pallet Type',     importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 50, label: 'Pallet Type' }]
+  PalletType;
+
+  @UI.lineItem:   [{ position: 150, label: 'Material Text',   importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 60, label: 'Material Text' }]
+  MaterialText;
+
+  @UI.lineItem:   [{ position: 160, label: 'Material No.',    importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 70, label: 'Material No.' }]
+  MaterialNumber;
+
+  @UI.lineItem:   [{ position: 170, label: 'Material No. 1',  importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 80, label: 'Material No. 1' }]
+  MaterialNumber1;
+
+  @UI.lineItem:   [{ position: 180, label: 'Channel/Exp Loc', importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 90, label: 'Channel/Exp Loc' }]
+  ChannelExpLoc;
+
+  /* --- Rigid characteristics --- */
+  @UI.lineItem:   [{ position: 200, label: 'Category (Rigid)',   importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 10, label: 'Category' }]
+  CategoryRigid;
+
+  @UI.lineItem:   [{ position: 210, label: 'Color (Rigid)',      importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 20, label: 'Color' }]
+  ColorRigid;
+
+  @UI.lineItem:   [{ position: 220, label: 'Gram (Rigid)',       importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 30, label: 'Gram' }]
+  GramRigid;
+
+  @UI.lineItem:   [{ position: 230, label: 'Version (Rigid)',    importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 40, label: 'Version' }]
+  VersionRigid;
+
+  @UI.lineItem:   [{ position: 240, label: 'Neckring (Rigid)',   importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 50, label: 'Neckring' }]
+  NeckringRigid;
+
+  @UI.lineItem:   [{ position: 250, label: 'Logo (Rigid)',       importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 60, label: 'Logo' }]
+  LogoRigid;
+
+  @UI.lineItem:   [{ position: 260, label: 'Additives (Rigid)',  importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 70, label: 'Additives' }]
+  AdditivesRigid;
+
+  @UI.lineItem:   [{ position: 270, label: 'Inner Qty (Rigid)',  importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 80, label: 'Inner Qty' }]
+  InnerQtyRigid;
+
+  @UI.lineItem:   [{ position: 280, label: 'Color LDR (Rigid)',  importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Rigid', position: 90, label: 'Color LDR' }]
+  ColorLdrRigid;
+
+  /* --- Flexible characteristics --- */
+  @UI.lineItem:   [{ position: 300, label: 'Category (Flex)',      importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 10, label: 'Category' }]
+  CategoryFlex;
+
+  @UI.lineItem:   [{ position: 310, label: 'Width (Flex)',         importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 20, label: 'Width' }]
+  FlexWidth;
+
+  @UI.lineItem:   [{ position: 320, label: 'Alloy (Flex)',         importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 30, label: 'Alloy' }]
+  FlexAlloy;
+
+  @UI.lineItem:   [{ position: 330, label: 'Al Thickness (Flex)',  importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 40, label: 'Al Thickness' }]
+  FlexAlThickness;
+
+  @UI.lineItem:   [{ position: 340, label: 'Sub-Category (Flex)',  importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 50, label: 'Sub-Category' }]
+  SubCategoryFlex;
+
+  @UI.lineItem:   [{ position: 350, label: 'Core Material (Flex)', importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 60, label: 'Core Material' }]
+  FlexCoreMaterial;
+
+  @UI.lineItem:   [{ position: 360, label: 'Unwind Dir (Flex)',    importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 70, label: 'Unwind Direction' }]
+  FlexUnwindDir;
+
+  @UI.lineItem:   [{ position: 370, label: 'Recipe (Flex)',        importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 80, label: 'Recipe' }]
+  RecipeFlex;
+
+  @UI.lineItem:   [{ position: 380, label: 'Core (Flex)',          importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 90, label: 'Core' }]
+  CoreFlex;
+
+  @UI.lineItem:   [{ position: 390, label: 'Design No. (Flex)',    importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 100, label: 'Design No.' }]
+  DesignNumberFlex;
+
+  @UI.lineItem:   [{ position: 400, label: 'Price Comb (Flex)',    importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 110, label: 'Price Combination' }]
+  PriceCombFlex;
+
+  @UI.lineItem:   [{ position: 410, label: 'Foil Thickness (Flex)',   importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 120, label: 'Foil Thickness' }]
+  FlexFoilThickness;
+
+  @UI.lineItem:   [{ position: 420, label: 'Paper Thickness (Flex)',  importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Flex', position: 130, label: 'Paper Thickness' }]
+  FlexPaperThickness;
+
+  /* --- Weights --- */
+  @UI.lineItem:   [{ position: 500, label: 'Net Weight',           importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 10, label: 'Net Weight' }]
+  NetWeight;
+
+  @UI.lineItem:   [{ position: 510, label: 'Net Weight SO',        importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 20, label: 'Net Weight SO' }]
+  NetWeightSO;
+
+  @UI.lineItem:   [{ position: 520, label: 'Gross Weight',         importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 30, label: 'Gross Weight' }]
+  GrossWeight;
+
+  @UI.lineItem:   [{ position: 530, label: 'Box Weight',           importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 40, label: 'Box Weight' }]
+  BoxWeight;
+
+  @UI.lineItem:   [{ position: 540, label: 'Box Weight (Flex)',    importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 50, label: 'Box Weight (Flex)' }]
+  BoxWeightFlex;
+
+  @UI.lineItem:   [{ position: 550, label: 'Pallet Weight x10',   importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 60, label: 'Pallet Weight x10' }]
+  PalletWeight10;
+
+  @UI.lineItem:   [{ position: 560, label: 'Pallet Weight (Flex)', importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'Weights', position: 70, label: 'Pallet Weight (Flex)' }]
+  PalletWeight1Flex;
+
+  /* --- Batch metadata --- */
+  @UI.lineItem:   [{ position: 600, label: 'Batch Created On', importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'General', position: 100, label: 'Batch Created On' }]
+  BatchCreatedDateTime;
+}

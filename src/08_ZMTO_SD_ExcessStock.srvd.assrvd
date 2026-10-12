@@ -1,0 +1,4 @@
+@EndUserText.label: 'MTO Excess Stock Transfer - Service Definition'
+define service ZMTO_SD_ExcessStock {
+  expose ZC_MTO_ExcessStock as ExcessStock;
+}

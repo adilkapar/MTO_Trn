@@ -1,0 +1,14 @@
+@EndUserText.label : 'MTO Transfer - Characteristic Check Config'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #C
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zmto_charc_chk {
+
+  key client         : mandt not null;
+  key charc_name     : abap.char(30) not null;
+  cds_field_name     : abap.char(30);
+  description        : abap.char(60);
+  active             : abap.char(1);
+
+}
